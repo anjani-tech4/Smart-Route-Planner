@@ -1,0 +1,14 @@
+station1,station2,distance,cost
+Indore,Bhawarsala,4.2,20
+Bhawarsala,Vijay Nagar,3.5,15
+Vijay Nagar,Bengali Square,2.8,15
+Bengali Square,Palasia,3.1,15
+Palasia,Geeta Bhawan,2.4,10
+Geeta Bhawan,Rau,6.5,25
+Vijay Nagar,Rau,5.8,25
+Bengali Square,Airport,7.2,30
+Airport,Rau,8.1,35
+Palasia,MR10,4.6,20
+MR10,Vijay Nagar,3.9,15
+MR10,Bapat Square,2.7,15
+Bapat Square,Rau,4.3,20 

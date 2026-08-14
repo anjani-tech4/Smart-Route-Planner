@@ -1,0 +1,126 @@
+#include<iostream>
+#include<pq.h>
+#include<vector>
+#include<unordered_map>
+#include<string>
+#include<stack>
+#include<unordered_set>
+#include<fstream>
+#include<sstream>
+#include<algorithm>
+using namespace std;
+double calculateCost(vector<string> route);
+
+int my_comparator(pair<string,double> left,pair<string,double> right)
+{
+return left.second>right.second;
+}
+
+int my_search_comparator(pair<string,double> left,pair<string,double> right)
+{
+return left.first==right.first;
+}
+
+double dijkstra(
+    unordered_map<string, vector<pair<string,double>>> &graph,
+    string source,
+    string destination
+)
+{
+unordered_map<string,pair<string,double>> path_map;
+
+// Initialize path_map
+for(auto &entry : graph)
+{
+path_map[entry.first] = {"", 0};
+}
+
+unordered_set<string> visited;
+unordered_set<string> settled;
+PQ<pair<string,double>> pq(my_comparator,my_search_comparator);
+pq.push({source,0});
+pair<string,double> element;
+bool route_found=false;
+
+while(!pq.empty())
+{
+element=pq.top();
+pq.pop();
+visited.erase(element.first);
+settled.insert(element.first);
+
+if(element.first==destination)
+{
+route_found=true;
+break;
+}
+
+//code to traverse adjacent vertices of the element extracted from pq
+auto iter=graph.find(element.first);
+vector<pair<string,double>> vector_of_pairs=(*iter).second;
+
+for(auto j:vector_of_pairs)
+{
+auto adv=j.first;
+auto total_distance=j.second+element.second;
+if(settled.find(adv)!=settled.end()) continue;
+if(visited.find(adv)!=visited.end())
+{
+auto idx=pq.find({adv,0});
+auto visited_entry=pq.at(idx);
+if(total_distance>=visited_entry.second) continue;
+visited_entry.second=total_distance;
+pq.update(visited_entry,idx);
+auto path_iter=path_map.find(adv);
+(*path_iter).second={element.first,j.second};
+}
+
+else
+{
+pair<string,double> entry(adv,total_distance);
+pq.push(entry);
+visited.insert(adv);
+auto path_iter=path_map.find(adv);
+(*path_iter).second={element.first,j.second};
+}
+}
+}
+
+if(route_found==true)
+{
+cout<<"Route exists and the distance is : "<<element.second<<"km"<<endl;
+auto look_for=destination;
+stack<pair<string,double>> stk;
+vector<string> route;
+route.push_back(destination);
+while(1)
+{
+if(look_for==source) break;
+auto path_iter=path_map.find(look_for);
+auto k=(*path_iter).first;
+auto val_pair=(*path_iter).second;
+stk.push({k,val_pair.second});
+route.push_back(k); 
+look_for=val_pair.first;
+}
+reverse(route.begin(), route.end());
+double total_cost = calculateCost(route);
+cout<<source;
+while(!stk.empty())
+{
+auto pr=stk.top();
+stk.pop();
+cout<<"------"<<pr.second<<"km ------>"<<pr.first;
+}
+cout<<endl;
+cout << "Total cost: Rs. " << total_cost << endl;
+}
+
+else
+{
+cout<<"Route doesnot exists"<<endl;
+return -1;
+}
+return element.second;
+}
+
