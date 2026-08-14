@@ -3,27 +3,33 @@
 #include<vector>
 using namespace std;
 template<typename T>
+
 class PQ
 {
 private:
 vector<T> data;
 int (*ptr2func)(T,T);
 int (*ptr2search_func)(T,T);
+
 public:
+
 PQ(int (*ptr2func)(T,T),int (*ptr2search_func)(T,T))
 {
 this->ptr2func=ptr2func;
 this->ptr2search_func=ptr2search_func;
 }
+
 void push(T element)
 {
 data.push_back(element);
 int child_index=data.size()-1;
 int parent_index;
 T g;
+
 while(child_index>0)
 {
 parent_index=(child_index-1)/2;
+
 if(!ptr2func(data[child_index],data[parent_index]))
 {
 g=data[child_index];
@@ -31,12 +37,14 @@ data[child_index]=data[parent_index];
 data[parent_index]=g;
 child_index=parent_index;
 }
+
 else
 {
 break;
 }
 }
 }
+
 void pop()
 {
 if(data.size()==0) throw string("queue is empty");
@@ -45,6 +53,7 @@ if(data.size()==1)
 data.resize(0);
 return;
 }
+
 int upper_bound=data.size()-1;
 data[0]=data[upper_bound];
 data.resize(data.size()-1);
@@ -53,6 +62,7 @@ int left_child_index;
 int right_child_index;
 int compare_with_index;
 T g;
+
 while(parent_index<data.size())
 {
 left_child_index=parent_index*2+1;
