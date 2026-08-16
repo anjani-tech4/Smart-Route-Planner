@@ -16,5 +16,6 @@ struct Edge
 double dijkstra(
     unordered_map<string, vector<Edge>> &graph,
     string source,
-    string destination
+    string destination,
+    vector<string> *pathOut = nullptr
 );

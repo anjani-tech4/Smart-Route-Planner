@@ -22,7 +22,8 @@ return left.first==right.first;
 double dijkstra(
     unordered_map<string, vector<Edge>> &graph,
     string source,
-    string destination
+    string destination,
+    vector<string> *pathOut
 )
 {
 unordered_map<string,pair<string,double>> path_map;
@@ -41,9 +42,10 @@ bool route_found=false;
 
 while(!pq.empty())
 {
+
 element=pq.top();
 pq.pop();
-visited.erase(element.first);
+//visited.erase(element.first);
 
 if(element.first==destination)
 {
@@ -63,6 +65,10 @@ auto total_cost = cost_map[element.first] + j.cost;
 if(visited.find(adv)!=visited.end())
 {
 auto idx=pq.find({adv,0});
+if (idx == -1)
+{
+    continue;
+}
 auto visited_entry=pq.at(idx);
 if(total_distance>=visited_entry.second) continue;
 visited_entry.second=total_distance;
@@ -99,12 +105,24 @@ auto val_pair=(*path_iter).second;
 stk.push({k,val_pair.second});
 look_for=val_pair.first;
 }
+
+// ---- additive only: capture the same path into pathOut if requested ----
+if(pathOut!=nullptr)
+{
+pathOut->clear();
+pathOut->push_back(source);
+}
+
 cout<<source;
 while(!stk.empty())
 {
 auto pr=stk.top();
 stk.pop();
 cout<<"------"<<pr.second<<"km ------>"<<pr.first;
+if(pathOut!=nullptr)
+{
+pathOut->push_back(pr.first);
+}
 }
 cout<<endl;
 }
@@ -116,4 +134,3 @@ return -1;
 }
 return element.second;
 }
-
