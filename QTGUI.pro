@@ -2,14 +2,16 @@ QT += widgets
 
 CONFIG += c++17
 
+INCLUDEPATH += src
+
 SOURCES += \
-    main.cpp \
-    dijkstra.cpp\
-    gui.cpp
+    src/main.cpp \
+    src/dijkstra.cpp \
+    src/gui.cpp
 
 HEADERS += \
-    dijkstra.h \
-    pq.h\
-    gui.h
+    src/dijkstra.h \
+    src/pq.h \
+    src/gui.h
 
 DISTFILES += data.csv

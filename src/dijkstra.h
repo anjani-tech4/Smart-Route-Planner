@@ -17,5 +17,6 @@ double dijkstra(
     unordered_map<string, vector<Edge>> &graph,
     string source,
     string destination,
-    vector<string> *pathOut = nullptr
+    vector<string> *pathOut,
+    double *costOut
 );

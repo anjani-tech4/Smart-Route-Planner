@@ -1,3 +1,27 @@
-main.exe
+# Qt / qmake build artifacts
+Makefile
+Makefile.*
+*.stash
+*.pro.user
+*.pro.user.*
+
+# Build output directories
+build/
+debug/
+release/
+Debug/
+Release/
+
+# Object files
+*.o
+*.obj
+
+# Executables
 *.exe
-.vscode/
+
+# Qt Creator temp files
+*.autosave
+
+# OS files
+.DS_Store
+Thumbs.db

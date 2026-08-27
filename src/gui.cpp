@@ -142,7 +142,8 @@ void RouteWindow::findRoute()
 
     // Pass a vector to receive the actual path dijkstra() computed.
     vector<string> path;
-    double distance = dijkstra(graph, source, destination, &path);
+    double cost = 0;
+    double distance = dijkstra(graph, source, destination, &path, &cost);
 
     if(distance == -1)
     {
@@ -152,10 +153,11 @@ void RouteWindow::findRoute()
     else
     {
         resultLabel->setText(
-            "Shortest Distance: " +
-            QString::number(distance) +
-            " km"
-        );
+        "Shortest Distance: " +
+        QString::number(distance) +
+        " km\nTotal Cost: ₹" +
+         QString::number(cost)
+     );
         drawGraph(path);
     }
 }
